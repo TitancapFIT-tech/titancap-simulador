@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>TitanCap.OS — Simulador de Entrenamiento Inteligente</title>
+  <title>TitanCap.OS — Simulador de tu Primera Semana de Entrenamiento DUP</title>
   <meta name="description" content="Descubre cómo un sistema de periodización ondulatoria diaria (DUP) gestiona tu fatiga y optimiza tu fuerza. Simula tu primera semana de entrenamiento personalizado.">
   <!-- Tailwind CSS via CDN + configuración de tema oscuro personalizado -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -29,12 +29,12 @@
             'danger': '#ff453a',
           },
           fontFamily: {
-            'display': ['Inter', 'system-ui', 'sans-serif'],
+            'display': ['"Bebas Neue"', 'cursive'],
             'body': ['Inter', 'system-ui', 'sans-serif'],
           },
           animation: {
-            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             'fade-in': 'fadeIn 0.5s ease-out',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
           },
           keyframes: {
             fadeIn: {
@@ -47,7 +47,9 @@
     }
   </script>
   <style>
-    /* Ajustes extra para que el diseño respire como un SaaS premium */
+    /* Importación de fuentes y estética base idéntica a TitanCap.OS */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Bebas+Neue&display=swap');
+
     body {
       background-color: #050505;
       font-family: 'Inter', system-ui, sans-serif;
@@ -56,16 +58,59 @@
       background: rgba(20, 20, 20, 0.8);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
-    .stress-bar-fill {
-      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    .day-card {
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .day-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #ffffff, transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
     }
     .day-card:hover {
+      background: rgba(30, 30, 30, 0.9);
       transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(255,255,255,0.08);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 16px 48px rgba(255, 255, 255, 0.1);
     }
-    input[type=range]::-webkit-slider-thumb {
+    .day-card:hover::before {
+      opacity: 1;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+      color: #050505;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
+      transform: scale(1.02);
+    }
+    .btn-primary:active {
+      transform: scale(0.97);
+    }
+    input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       height: 20px;
       width: 20px;
@@ -75,7 +120,7 @@
       cursor: pointer;
       margin-top: -6px;
     }
-    input[type=range]::-webkit-slider-runnable-track {
+    input[type="range"]::-webkit-slider-runnable-track {
       height: 8px;
       border-radius: 4px;
       background: #2a2a2a;
@@ -84,23 +129,24 @@
 </head>
 <body class="bg-titan-900 text-titan-100 font-body antialiased">
 
-  <!-- Contenedor principal, máximo ancho de app móvil (lead magnet visual) -->
-  <main class="max-w-lg mx-auto min-h-screen px-5 py-10 flex flex-col justify-center">
-
-    <!-- Logo + tagline -->
-    <header class="text-center mb-8 animate-fade-in">
-      <div class="inline-flex items-center gap-2 mb-4">
-        <span class="text-4xl font-extrabold tracking-wide bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-          TITANCAP<span class="text-white">.</span>OS
+  <!-- Contenedor principal (réplica exacta del #app de TitanCap.OS) -->
+  <main class="max-w-lg mx-auto min-h-screen p-6 flex flex-col justify-center">
+    
+    <!-- Logo con animación (idéntico al original) -->
+    <header class="text-center mb-10 animate-fade-in">
+      <div class="inline-flex flex-col items-center gap-2">
+        <span class="text-5xl font-extrabold tracking-wide text-white font-display" style="text-shadow: 0 0 30px rgba(255,255,255,0.3);">
+          TITANCAP<span class="text-white animate-pulse">.</span>OS
         </span>
+        <div class="h-1 w-20 mx-auto rounded-full" style="background: linear-gradient(90deg, transparent, #ffffff, transparent); animation: loading 2s ease-in-out infinite;"></div>
       </div>
-      <h1 class="text-2xl font-semibold text-white mb-2">Ingeniería Deportiva Basada en Ciencia</h1>
-      <p class="text-titan-300 max-w-sm mx-auto">Simula ahora cómo el sistema DUP ajusta tu volumen, intensidad y fatiga en tiempo real.</p>
+      <h1 class="text-2xl font-semibold text-white mt-4 mb-2">Simula tu primera semana de entrenamiento inteligente</h1>
+      <p class="text-titan-300 max-w-sm mx-auto">Configura tu perfil de atleta y descubre cómo el sistema DUP de TitanCap.OS genera tu plan de entrenamiento automáticamente.</p>
     </header>
 
-    <!-- Tarjeta de configuración (lead magnet interactivo) -->
+    <!-- Tarjeta de configuración (réplica exacta del formulario de perfil de TitanCap.OS) -->
     <div class="glass-card rounded-3xl p-6 mb-8 animate-fade-in">
-      <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+      <h2 class="text-lg font-semibold text-white mb-5 flex items-center gap-2">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-success">
           <circle cx="12" cy="12" r="10"/>
           <path d="M12 6v6l4 2"/>
@@ -110,7 +156,7 @@
 
       <!-- Experiencia -->
       <div class="mb-5">
-        <label class="block text-titan-300 text-sm font-medium mb-2">Experiencia</label>
+        <label class="block text-titan-300 text-sm font-medium mb-2 uppercase tracking-wider">Experiencia</label>
         <div class="grid grid-cols-3 gap-2">
           <button onclick="selectExperience('beginner', this)" class="exp-btn py-2.5 px-3 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-level="beginner">Principiante</button>
           <button onclick="selectExperience('intermediate', this)" class="exp-btn py-2.5 px-3 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-level="intermediate">Intermedio</button>
@@ -120,7 +166,7 @@
 
       <!-- Días por semana -->
       <div class="mb-5">
-        <label class="block text-titan-300 text-sm font-medium mb-2">Días disponibles por semana</label>
+        <label class="block text-titan-300 text-sm font-medium mb-2 uppercase tracking-wider">Días disponibles</label>
         <div class="flex gap-2">
           <button onclick="selectDays(2, this)" class="days-btn px-4 py-2 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-days="2">2</button>
           <button onclick="selectDays(3, this)" class="days-btn px-4 py-2 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-days="3">3</button>
@@ -132,7 +178,7 @@
 
       <!-- Objetivo -->
       <div class="mb-6">
-        <label class="block text-titan-300 text-sm font-medium mb-2">Objetivo principal</label>
+        <label class="block text-titan-300 text-sm font-medium mb-2 uppercase tracking-wider">Objetivo</label>
         <div class="grid grid-cols-3 gap-2">
           <button onclick="selectGoal('strength', this)" class="goal-btn py-2.5 px-3 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-goal="strength">Fuerza</button>
           <button onclick="selectGoal('hypertrophy', this)" class="goal-btn py-2.5 px-3 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-goal="hypertrophy">Hipertrofia</button>
@@ -140,54 +186,56 @@
         </div>
       </div>
 
-      <button id="generateBtn" onclick="generateProgram()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-white to-gray-300 text-black font-bold text-base hover:shadow-lg hover:scale-[1.02] active:scale-95 transition-all">
-        Generar mi semana DUP
+      <!-- Botón de generación con estilo del original -->
+      <button id="generateBtn" onclick="generateProgram()" class="btn-primary w-full">
+        Generar mi primera semana DUP
       </button>
     </div>
 
-    <!-- Contenedor de resultados (oculto inicialmente) -->
+    <!-- Contenedor de resultados (oculto inicialmente, misma estructura que el dashboard) -->
     <div id="resultContainer" class="hidden animate-fade-in">
-      <!-- Resumen de fatiga y estrés -->
       <div class="glass-card rounded-3xl p-5 mb-6">
         <div class="flex items-center justify-between mb-3">
-          <h3 class="text-white font-semibold">Estrés Semanal Acumulado</h3>
-          <span id="totalStressBadge" class="text-xs font-bold px-2 py-1 rounded-full bg-white/10 text-titan-200">0</span>
+          <h3 class="text-white font-semibold font-display tracking-wider">SEMANA 1 · ADAPTACIÓN</h3>
+          <span id="totalStressBadge" class="text-xs font-bold px-2 py-1 rounded-full bg-white/10 text-titan-200">SI 0</span>
         </div>
         <div class="w-full bg-titan-700 rounded-full h-3 mb-3 overflow-hidden">
-          <div id="stressBarFill" class="stress-bar-fill h-full rounded-full bg-gradient-to-r from-success via-warn to-danger" style="width: 0%"></div>
+          <div id="stressBarFill" class="h-full rounded-full bg-gradient-to-r from-success via-warn to-danger transition-all duration-700" style="width: 0%"></div>
         </div>
         <p id="fatigueAdvice" class="text-sm text-titan-300"></p>
       </div>
 
-      <!-- Semana DUP visual -->
+      <!-- Grid de días (misma estructura que el dashboard) -->
       <div id="weekContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8"></div>
 
-      <!-- Call-to-action -->
+      <!-- Botón de CTA hacia la plataforma real (reemplaza al antiguo) -->
       <div class="text-center">
-        <p class="text-titan-400 text-sm mb-3">¿Quieres este plan exacto adaptado a tu cuerpo?</p>
-        <a href="https://titancap-os.vercel.app" target="_blank" class="inline-block w-full py-3.5 rounded-xl bg-success text-black font-bold text-base hover:bg-green-400 transition-colors">
-          Quiero mi plan personalizado
+        <p class="text-titan-400 text-sm mb-3">¿Quieres que el algoritmo decida por ti semana a semana?</p>
+        <a href="https://v0-untitled-chat-one-mauve.vercel.app/" target="_blank" class="btn-primary w-full inline-flex bg-success hover:bg-green-400" style="background: #30d158; color: #000;">
+          Adquirir TitanCap.OS ahora
         </a>
-        <p class="text-titan-400 text-xs mt-2">Accede a la plataforma real con algoritmos avanzados y gestión de sobrecarga.</p>
+        <p class="text-titan-400 text-xs mt-2">Accede a la plataforma real por $10.99 USD. Acceso de por vida.</p>
       </div>
     </div>
 
     <!-- Pie de confianza -->
     <footer class="mt-10 text-center text-titan-500 text-xs">
-      © 2025 TitanCap.OS – Ciencia del entrenamiento.
+      © 2025 TitanCap.OS — Ciencia del entrenamiento. Un solo pago, acceso para siempre.
     </footer>
   </main>
 
   <script>
-    // Estado de selección
+    // Estado de selección (por defecto igual que el perfil inicial del sistema)
     let selectedExperience = 'beginner';
     let selectedDays = 4;
     let selectedGoal = 'hypertrophy';
 
-    // Inicializar botones activos
-    document.querySelector('[data-level="beginner"]').classList.add('bg-white/10', 'border-white/30');
-    document.querySelector('[data-days="4"]').classList.add('bg-white/10', 'border-white/30');
-    document.querySelector('[data-goal="hypertrophy"]').classList.add('bg-white/10', 'border-white/30');
+    // Inicializar botones activos (igual que en el sistema real)
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('[data-level="beginner"]').classList.add('bg-white/10', 'border-white/30');
+      document.querySelector('[data-days="4"]').classList.add('bg-white/10', 'border-white/30');
+      document.querySelector('[data-goal="hypertrophy"]').classList.add('bg-white/10', 'border-white/30');
+    });
 
     function selectExperience(level, btn) {
       selectedExperience = level;
@@ -207,66 +255,90 @@
       btn.classList.add('bg-white/10', 'border-white/30');
     }
 
-    // Datos de ejercicios por grupo (simplificado)
+    // Datos de ejercicios (catálogo simplificado del sistema real)
     const exerciseDB = {
-      chest: ['Press banca plano', 'Press inclinado mancuernas', 'Aperturas'],
-      back: ['Dominadas', 'Remo con barra', 'Jalón al pecho'],
-      quads: ['Sentadilla', 'Prensa 45°', 'Extensiones'],
-      hams: ['Peso muerto rumano', 'Curl femoral'],
-      shoulders: ['Press militar', 'Elevaciones laterales', 'Face pull'],
-      arms: ['Curl barra', 'Extensiones polea'],
+      pecho: ['Press de banca plano', 'Press inclinado con mancuernas', 'Aperturas con mancuernas'],
+      espalda: ['Dominadas', 'Remo con barra', 'Jalón al pecho en polea alta'],
+      cuadriceps: ['Sentadilla libre trasera', 'Prensa de piernas 45°', 'Extensiones de cuádriceps'],
+      isquios: ['Peso muerto rumano', 'Curl femoral tumbado'],
+      deltoides: ['Press militar con barra', 'Elevaciones laterales', 'Face Pulls'],
+      biceps: ['Curl de bíceps con barra'],
+      triceps: ['Press francés con barra Z'],
     };
 
-    // Plantillas DUP según días/split
+    // Plantillas de splits (idénticas a las de config.js del sistema real)
     function getDUPSplit(days) {
       if (days === 2) return ['Full Body A', 'Full Body B'];
-      if (days === 3) return ['Push', 'Pull', 'Legs'];
-      if (days === 4) return ['Torso (Push)', 'Pierna', 'Torso (Pull)', 'Pierna'];
+      if (days === 3) return ['Full Body A', 'Full Body B', 'Full Body C'];
+      if (days === 4) return ['Torso (Empuje)', 'Pierna', 'Torso (Tirón)', 'Pierna'];
       if (days === 5) return ['Push', 'Pull', 'Legs', 'Push', 'Pull'];
       if (days === 6) return ['Push', 'Pull', 'Legs', 'Push', 'Pull', 'Legs'];
     }
 
-    function getDayFocus(dayName, idx) {
+    // Enfoque de cada día (según split real)
+    function getDayFocus(dayName, idx, totalDays) {
+      const types = {
+        'full_body_a': ['cuadriceps', 'pecho', 'espalda', 'isquios', 'deltoides', 'biceps'],
+        'full_body_b': ['cuadriceps', 'pecho', 'espalda', 'triceps', 'deltoides', 'biceps'],
+        'full_body_c': ['cuadriceps', 'pecho', 'espalda', 'isquios', 'deltoides', 'triceps'],
+        'torso_push': ['pecho', 'deltoides', 'triceps'],
+        'torso_pull': ['espalda', 'biceps'],
+        'pierna': ['cuadriceps', 'isquios'],
+        'push': ['pecho', 'deltoides', 'triceps'],
+        'pull': ['espalda', 'biceps'],
+        'legs': ['cuadriceps', 'isquios'],
+      };
       const lower = dayName.toLowerCase();
-      if (lower.includes('push') || lower.includes('torso') && idx%2===0) return ['chest','shoulders','arms'];
-      if (lower.includes('pull') || lower.includes('torso') && idx%2===1) return ['back','hams','arms'];
-      if (lower.includes('pierna') || lower.includes('legs')) return ['quads','hams'];
-      if (lower.includes('full body')) return ['chest','back','quads','hams','shoulders','arms'];
-      return ['chest','back','quads']; // fallback
+      if (lower.includes('full body a')) return types.full_body_a;
+      if (lower.includes('full body b')) return types.full_body_b;
+      if (lower.includes('full body c')) return types.full_body_c;
+      if (lower.includes('torso') && lower.includes('empuje')) return types.torso_push;
+      if (lower.includes('torso') && lower.includes('tirón')) return types.torso_pull;
+      if (lower.includes('pierna') || lower.includes('legs')) return types.pierna;
+      if (lower.includes('push')) return types.push;
+      if (lower.includes('pull')) return types.pull;
+      return types.full_body_a; // fallback
     }
 
-    // DUP ondulación diaria (según nivel y objetivo)
+    // Volumen objetivo según nivel (idéntico a generator.js)
+    function getVolumeForGroup(group, level) {
+      const baseVolumes = {
+        beginner: { pecho: 6, espalda: 7, deltoides: 6, cuadriceps: 6, isquios: 6, biceps: 4, triceps: 4 },
+        intermediate: { pecho: 8, espalda: 10, deltoides: 8, cuadriceps: 8, isquios: 8, biceps: 6, triceps: 6 },
+        advanced: { pecho: 10, espalda: 12, deltoides: 10, cuadriceps: 10, isquios: 10, biceps: 8, triceps: 8 },
+      };
+      return baseVolumes[level][group] || 6;
+    }
+
+    // Parámetros DUP según nivel y objetivo (fórmulas del sistema)
     function getDUPParams(level, goal) {
       const base = {
-        beginner: { strength: { reps: '5-7', rpe: '7-8', rir: 2, stressPerSet: 1.0 },
-                    hypertrophy: { reps: '8-12', rpe: '6-8', rir: 3, stressPerSet: 0.8 },
-                    power: { reps: '3-5', rpe: '5-6', rir: 4, stressPerSet: 0.5 } },
-        intermediate: { strength: { reps: '4-6', rpe: '7.5-9', rir: 1.5, stressPerSet: 1.3 },
-                        hypertrophy: { reps: '8-12', rpe: '7-9', rir: 2, stressPerSet: 1.0 },
-                        power: { reps: '3-5', rpe: '5-6', rir: 3.5, stressPerSet: 0.7 } },
-        advanced: { strength: { reps: '3-5', rpe: '8-9.5', rir: 1, stressPerSet: 1.6 },
-                    hypertrophy: { reps: '8-12', rpe: '7.5-9.5', rir: 1.5, stressPerSet: 1.3 },
-                    power: { reps: '2-4', rpe: '4-6', rir: 3, stressPerSet: 0.8 } }
+        beginner: {
+          strength: { reps: '4-6', rpe: '7.5-9', rir: '2-1', stressPerSet: 1.0 },
+          hypertrophy: { reps: '8-12', rpe: '6-8', rir: '4-2', stressPerSet: 0.7 },
+          power: { reps: '3-5', rpe: '5-6', rir: '5-4', stressPerSet: 0.4 },
+        },
+        intermediate: {
+          strength: { reps: '4-6', rpe: '8-9', rir: '2-1', stressPerSet: 1.3 },
+          hypertrophy: { reps: '8-12', rpe: '7-9', rir: '3-1', stressPerSet: 1.0 },
+          power: { reps: '3-5', rpe: '5-6', rir: '5-4', stressPerSet: 0.6 },
+        },
+        advanced: {
+          strength: { reps: '3-5', rpe: '8.5-9.5', rir: '1.5-0.5', stressPerSet: 1.7 },
+          hypertrophy: { reps: '8-12', rpe: '7.5-9.5', rir: '2.5-0.5', stressPerSet: 1.4 },
+          power: { reps: '2-4', rpe: '4-6', rir: '6-4', stressPerSet: 0.8 },
+        },
       };
-      // Ajustar según objetivo: fuerza => más énfasis en strength
-      if (goal === 'strength') {
-        base[level].strength.stressPerSet *= 1.2;
-        base[level].hypertrophy.stressPerSet *= 0.9;
-      } else if (goal === 'hypertrophy') {
-        base[level].hypertrophy.stressPerSet *= 1.2;
-        base[level].strength.stressPerSet *= 0.9;
-      }
       return base[level];
     }
 
-    // Obtener tipo DUP para el día según índice, variando ondulación
+    // Ondulación diaria DUP (ciclo de 3/4 días)
     function getDayDUPType(dayIdx, totalDays) {
-      const cycle = ['strength', 'hypertrophy', 'power'];
       if (totalDays <= 3) {
-        return cycle[dayIdx % cycle.length];
+        return ['strength', 'hypertrophy', 'power'][dayIdx % 3];
       } else {
-        // Ondulación más compleja para más días
-        const pattern = ['strength', 'hypertrophy', 'power', 'hypertrophy', 'strength', 'power'];
+        // Ondulación para más días (patrón del sistema real)
+        const pattern = ['strength', 'hypertrophy', 'power', 'hypertrophy'];
         return pattern[dayIdx % pattern.length];
       }
     }
@@ -283,50 +355,68 @@
 
       daysName.forEach((name, idx) => {
         const dupType = getDayDUPType(idx, totalDays);
-        const focusMuscles = getDayFocus(name, idx);
+        const focusMuscles = getDayFocus(name, idx, totalDays);
         const dupData = params[dupType];
 
-        // Generar ejercicios para ese día (2-4 ejercicios)
+        // Calcular ejercicios y estrés para el día
         const exercises = [];
         let dayStress = 0;
+        const dayVolumeTarget = {}; // volumen diario por grupo
+
         focusMuscles.forEach(muscle => {
-          if (exerciseDB[muscle]) {
-            const exList = exerciseDB[muscle];
-            // Escoger 1-2 ejercicios al azar (simulando selección inteligente)
-            const selectedEx = exList.sort(() => 0.5 - Math.random()).slice(0, Math.min(2, exList.length));
-            selectedEx.forEach(ex => {
-              const sets = muscle.includes('chest') || muscle.includes('back') || muscle.includes('quads') ? 4 : 3;
-              const stressPerExercise = Math.round((sets * dupData.stressPerSet) * 10) / 10;
-              exercises.push({
-                name: ex,
-                sets,
-                reps: dupData.reps,
-                rpe: dupData.rpe,
-                rir: dupData.rir,
-                stress: stressPerExercise
-              });
-              dayStress += stressPerExercise;
+          const weeklyVolume = getVolumeForGroup(muscle, selectedExperience);
+          const freq = focusMuscles.filter(m => m === muscle).length || 1;
+          dayVolumeTarget[muscle] = Math.max(1, Math.round(weeklyVolume / freq));
+        });
+
+        focusMuscles.forEach(muscle => {
+          if (!exerciseDB[muscle]) return;
+          const exList = exerciseDB[muscle];
+          // Seleccionar los ejercicios prioritarios (igual que el sistema)
+          const selectedEx = exList.slice(0, Math.min(2, exList.length));
+          let remainingSets = dayVolumeTarget[muscle] || 2;
+
+          selectedEx.forEach((ex, exIdx) => {
+            const isPriority = exIdx === 0;
+            let sets = isPriority ? Math.min(4, remainingSets) : Math.min(3, remainingSets);
+            sets = Math.max(1, Math.round(sets));
+            const stressPerExercise = Math.round((sets * dupData.stressPerSet) * 10) / 10;
+            exercises.push({
+              name: ex,
+              sets,
+              reps: dupData.reps,
+              rpe: dupData.rpe,
+              rir: dupData.rir,
+              stress: stressPerExercise,
+              isPriority,
             });
-          }
+            dayStress += stressPerExercise;
+            remainingSets -= sets;
+          });
         });
 
         totalStress += dayStress;
         const stressColor = dayStress > 8 ? 'text-danger' : dayStress > 5 ? 'text-warn' : 'text-success';
+        const dupEmoji = dupType === 'strength' ? '🏋️' : dupType === 'hypertrophy' ? '💪' : '⚡';
+        const dupLabel = dupType === 'strength' ? 'Fuerza' : dupType === 'hypertrophy' ? 'Hipertrofia' : 'Potencia';
 
         const cardHTML = `
-          <div class="day-card glass-card rounded-2xl p-5 transition-all duration-300 border border-white/5">
-            <div class="flex justify-between items-start mb-3">
+          <div class="day-card glass-card rounded-2xl p-5 border border-white/5">
+            <div class="flex justify-between items-start mb-4">
               <div>
                 <h3 class="text-white font-semibold text-lg">Día ${idx+1}: ${name}</h3>
-                <span class="text-xs uppercase tracking-wider text-titan-400">${dupType}</span>
+                <span class="text-xs uppercase tracking-wider text-titan-400 font-medium">${dupEmoji} ${dupLabel}</span>
               </div>
-              <span class="text-sm font-mono ${stressColor}">SI ${dayStress.toFixed(1)}</span>
+              <span class="text-sm font-mono font-bold ${stressColor}">SI ${dayStress.toFixed(1)}</span>
             </div>
-            <div class="space-y-2">
+            <div class="space-y-3">
               ${exercises.map(ex => `
-                <div class="flex justify-between text-sm border-b border-white/5 pb-1">
-                  <span class="text-titan-200">${ex.name}</span>
-                  <span class="text-titan-400">${ex.sets}x${ex.reps} @RPE ${ex.rpe}</span>
+                <div class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                  <div>
+                    <span class="text-titan-200 font-medium">${ex.name}</span>
+                    ${ex.isPriority ? '<span class="text-yellow-500 ml-1" title="Ejercicio prioritario">⭐</span>' : ''}
+                  </div>
+                  <span class="text-titan-400 text-xs">${ex.sets}x${ex.reps} · RPE ${ex.rpe}</span>
                 </div>
               `).join('')}
             </div>
@@ -337,34 +427,28 @@
 
       container.innerHTML = allDayCards.join('');
 
-      // Actualizar barra de estrés total
+      // Actualizar barra de estrés total (umbrales del sistema)
       const stressBar = document.getElementById('stressBarFill');
-      const maxStress = totalDays > 4 ? 50 : 35; // umbral de sobrecarga
+      const maxStress = totalDays > 4 ? 55 : 40;
       const percentage = Math.min(100, (totalStress / maxStress) * 100);
       stressBar.style.width = `${percentage}%`;
-      document.getElementById('totalStressBadge').textContent = `Total: ${totalStress.toFixed(1)}`;
+      document.getElementById('totalStressBadge').textContent = `SI ${totalStress.toFixed(1)}`;
 
-      // Recomendación de fatiga
+      // Recomendación de fatiga (misma lógica que el sistema)
       const advice = document.getElementById('fatigueAdvice');
       if (percentage > 90) {
-        advice.innerHTML = '<span class="text-danger font-medium">⚠️ Riesgo de sobrecarga.</span> Se recomienda descarga tras esta semana.';
+        advice.innerHTML = '<span class="text-danger font-semibold">⚠️ Carga alta.</span> El sistema real programaría una descarga la próxima semana.';
       } else if (percentage > 65) {
-        advice.innerHTML = '<span class="text-warn font-medium">⚡ Carga alta.</span> Vigila sueño y alimentación. Semana productiva.';
+        advice.innerHTML = '<span class="text-warn font-semibold">⚡ Carga moderada-alta.</span> Vigila tu sueño y alimentación. Semana productiva.';
       } else {
-        advice.innerHTML = '<span class="text-success font-medium">✅ Carga óptima.</span> Estimulas adaptación sin acumular fatiga excesiva.';
+        advice.innerHTML = '<span class="text-success font-semibold">✅ Carga óptima.</span> Estimulas adaptación sin acumular fatiga excesiva.';
       }
 
-      // Mostrar resultados
-      document.getElementById('resultContainer').classList.remove('hidden');
-      document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Mostrar resultados con scroll suave
+      const resultContainer = document.getElementById('resultContainer');
+      resultContainer.classList.remove('hidden');
+      resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-
-    // Activar botón generar con Enter (opcional)
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && document.activeElement.tagName !== 'INPUT') {
-        generateProgram();
-      }
-    });
   </script>
 </body>
 </html>
