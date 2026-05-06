@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>TitanCap.OS — Simulador de Entrenamiento Inteligente</title>
+  <meta name="description" content="Descubre cómo un sistema de periodización ondulatoria diaria (DUP) gestiona tu fatiga y optimiza tu fuerza. Simula tu primera semana de entrenamiento personalizado.">
+  <!-- Tailwind CSS via CDN + configuración de tema oscuro personalizado -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'titan': {
+              900: '#050505',
+              800: '#0a0a0a',
+              700: '#1a1a1a',
+              600: '#2a2a2a',
+              500: '#3a3a3a',
+              400: '#6e6e73',
+              300: '#98989d',
+              200: '#d1d1d6',
+              100: '#f5f5f7',
+            },
+            'success': '#30d158',
+            'warn': '#ff9f0a',
+            'danger': '#ff453a',
+          },
+          fontFamily: {
+            'display': ['Inter', 'system-ui', 'sans-serif'],
+            'body': ['Inter', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'fade-in': 'fadeIn 0.5s ease-out',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(12px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Ajustes extra para que el diseño respire como un SaaS premium */
+    body {
+      background-color: #050505;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .glass-card {
+      background: rgba(20, 20, 20, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .stress-bar-fill {
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .day-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(255,255,255,0.08);
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 10px rgba(255,255,255,0.4);
+      cursor: pointer;
+      margin-top: -6px;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      height: 8px;
+      border-radius: 4px;
+      background: #2a2a2a;
+    }
+  </style>
+</head>
+<body class="bg-titan-900 text-titan-100 font-body antialiased">
+
+  <!-- Contenedor principal, máximo ancho de app móvil (lead magnet visual) -->
+  <main class="max-w-lg mx-auto min-h-screen px-5 py-10 flex flex-col justify-center">
+
+    <!-- Logo + tagline -->
+    <header class="text-center mb-8 animate-fade-in">
+      <div class="inline-flex items-center gap-2 mb-4">
+        <span class="text-4xl font-extrabold tracking-wide bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+          TITANCAP<span class="text-white">.</span>OS
+        </span>
+      </div>
+      <h1 class="text-2xl font-semibold text-white mb-2">Ingeniería Deportiva Basada en Ciencia</h1>
+      <p class="text-titan-300 max-w-sm mx-auto">Simula ahora cómo el sistema DUP ajusta tu volumen, intensidad y fatiga en tiempo real.</p>
+    </header>
+
+    <!-- Tarjeta de configuración (lead magnet interactivo) -->
+    <div class="glass-card rounded-3xl p-6 mb-8 animate-fade-in">
+      <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-success">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+        Configura tu perfil de atleta
+      </h2>
+
+      <!-- Experiencia -->
+      <div class="mb-5">
+        <label class="block text-titan-300 text-sm font-medium mb-2">Experiencia</label>
+        <div class="grid grid-cols-3 gap-2">
+          <button onclick="selectExperience('beginner', this)" class="exp-btn py-2.5 px-3 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-level="beginner">Principiante</button>
+          <button onclick="selectExperience('intermediate', this)" class="exp-btn py-2.5 px-3 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-level="intermediate">Intermedio</button>
+          <button onclick="selectExperience('advanced', this)" class="exp-btn py-2.5 px-3 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-level="advanced">Avanzado</button>
+        </div>
+      </div>
+
+      <!-- Días por semana -->
+      <div class="mb-5">
+        <label class="block text-titan-300 text-sm font-medium mb-2">Días disponibles por semana</label>
+        <div class="flex gap-2">
+          <button onclick="selectDays(2, this)" class="days-btn px-4 py-2 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-days="2">2</button>
+          <button onclick="selectDays(3, this)" class="days-btn px-4 py-2 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-days="3">3</button>
+          <button onclick="selectDays(4, this)" class="days-btn px-4 py-2 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-days="4">4</button>
+          <button onclick="selectDays(5, this)" class="days-btn px-4 py-2 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-days="5">5</button>
+          <button onclick="selectDays(6, this)" class="days-btn px-4 py-2 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-days="6">6</button>
+        </div>
+      </div>
+
+      <!-- Objetivo -->
+      <div class="mb-6">
+        <label class="block text-titan-300 text-sm font-medium mb-2">Objetivo principal</label>
+        <div class="grid grid-cols-3 gap-2">
+          <button onclick="selectGoal('strength', this)" class="goal-btn py-2.5 px-3 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-goal="strength">Fuerza</button>
+          <button onclick="selectGoal('hypertrophy', this)" class="goal-btn py-2.5 px-3 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-goal="hypertrophy">Hipertrofia</button>
+          <button onclick="selectGoal('mixed', this)" class="goal-btn py-2.5 px-3 rounded-xl text-sm font-medium border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-goal="mixed">Mixto</button>
+        </div>
+      </div>
+
+      <button id="generateBtn" onclick="generateProgram()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-white to-gray-300 text-black font-bold text-base hover:shadow-lg hover:scale-[1.02] active:scale-95 transition-all">
+        Generar mi semana DUP
+      </button>
+    </div>
+
+    <!-- Contenedor de resultados (oculto inicialmente) -->
+    <div id="resultContainer" class="hidden animate-fade-in">
+      <!-- Resumen de fatiga y estrés -->
+      <div class="glass-card rounded-3xl p-5 mb-6">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-white font-semibold">Estrés Semanal Acumulado</h3>
+          <span id="totalStressBadge" class="text-xs font-bold px-2 py-1 rounded-full bg-white/10 text-titan-200">0</span>
+        </div>
+        <div class="w-full bg-titan-700 rounded-full h-3 mb-3 overflow-hidden">
+          <div id="stressBarFill" class="stress-bar-fill h-full rounded-full bg-gradient-to-r from-success via-warn to-danger" style="width: 0%"></div>
+        </div>
+        <p id="fatigueAdvice" class="text-sm text-titan-300"></p>
+      </div>
+
+      <!-- Semana DUP visual -->
+      <div id="weekContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8"></div>
+
+      <!-- Call-to-action -->
+      <div class="text-center">
+        <p class="text-titan-400 text-sm mb-3">¿Quieres este plan exacto adaptado a tu cuerpo?</p>
+        <a href="https://titancap-os.vercel.app" target="_blank" class="inline-block w-full py-3.5 rounded-xl bg-success text-black font-bold text-base hover:bg-green-400 transition-colors">
+          Quiero mi plan personalizado
+        </a>
+        <p class="text-titan-400 text-xs mt-2">Accede a la plataforma real con algoritmos avanzados y gestión de sobrecarga.</p>
+      </div>
+    </div>
+
+    <!-- Pie de confianza -->
+    <footer class="mt-10 text-center text-titan-500 text-xs">
+      © 2025 TitanCap.OS – Ciencia del entrenamiento.
+    </footer>
+  </main>
+
+  <script>
+    // Estado de selección
+    let selectedExperience = 'beginner';
+    let selectedDays = 4;
+    let selectedGoal = 'hypertrophy';
+
+    // Inicializar botones activos
+    document.querySelector('[data-level="beginner"]').classList.add('bg-white/10', 'border-white/30');
+    document.querySelector('[data-days="4"]').classList.add('bg-white/10', 'border-white/30');
+    document.querySelector('[data-goal="hypertrophy"]').classList.add('bg-white/10', 'border-white/30');
+
+    function selectExperience(level, btn) {
+      selectedExperience = level;
+      document.querySelectorAll('.exp-btn').forEach(b => b.classList.remove('bg-white/10', 'border-white/30'));
+      btn.classList.add('bg-white/10', 'border-white/30');
+    }
+
+    function selectDays(days, btn) {
+      selectedDays = days;
+      document.querySelectorAll('.days-btn').forEach(b => b.classList.remove('bg-white/10', 'border-white/30'));
+      btn.classList.add('bg-white/10', 'border-white/30');
+    }
+
+    function selectGoal(goal, btn) {
+      selectedGoal = goal;
+      document.querySelectorAll('.goal-btn').forEach(b => b.classList.remove('bg-white/10', 'border-white/30'));
+      btn.classList.add('bg-white/10', 'border-white/30');
+    }
+
+    // Datos de ejercicios por grupo (simplificado)
+    const exerciseDB = {
+      chest: ['Press banca plano', 'Press inclinado mancuernas', 'Aperturas'],
+      back: ['Dominadas', 'Remo con barra', 'Jalón al pecho'],
+      quads: ['Sentadilla', 'Prensa 45°', 'Extensiones'],
+      hams: ['Peso muerto rumano', 'Curl femoral'],
+      shoulders: ['Press militar', 'Elevaciones laterales', 'Face pull'],
+      arms: ['Curl barra', 'Extensiones polea'],
+    };
+
+    // Plantillas DUP según días/split
+    function getDUPSplit(days) {
+      if (days === 2) return ['Full Body A', 'Full Body B'];
+      if (days === 3) return ['Push', 'Pull', 'Legs'];
+      if (days === 4) return ['Torso (Push)', 'Pierna', 'Torso (Pull)', 'Pierna'];
+      if (days === 5) return ['Push', 'Pull', 'Legs', 'Push', 'Pull'];
+      if (days === 6) return ['Push', 'Pull', 'Legs', 'Push', 'Pull', 'Legs'];
+    }
+
+    function getDayFocus(dayName, idx) {
+      const lower = dayName.toLowerCase();
+      if (lower.includes('push') || lower.includes('torso') && idx%2===0) return ['chest','shoulders','arms'];
+      if (lower.includes('pull') || lower.includes('torso') && idx%2===1) return ['back','hams','arms'];
+      if (lower.includes('pierna') || lower.includes('legs')) return ['quads','hams'];
+      if (lower.includes('full body')) return ['chest','back','quads','hams','shoulders','arms'];
+      return ['chest','back','quads']; // fallback
+    }
+
+    // DUP ondulación diaria (según nivel y objetivo)
+    function getDUPParams(level, goal) {
+      const base = {
+        beginner: { strength: { reps: '5-7', rpe: '7-8', rir: 2, stressPerSet: 1.0 },
+                    hypertrophy: { reps: '8-12', rpe: '6-8', rir: 3, stressPerSet: 0.8 },
+                    power: { reps: '3-5', rpe: '5-6', rir: 4, stressPerSet: 0.5 } },
+        intermediate: { strength: { reps: '4-6', rpe: '7.5-9', rir: 1.5, stressPerSet: 1.3 },
+                        hypertrophy: { reps: '8-12', rpe: '7-9', rir: 2, stressPerSet: 1.0 },
+                        power: { reps: '3-5', rpe: '5-6', rir: 3.5, stressPerSet: 0.7 } },
+        advanced: { strength: { reps: '3-5', rpe: '8-9.5', rir: 1, stressPerSet: 1.6 },
+                    hypertrophy: { reps: '8-12', rpe: '7.5-9.5', rir: 1.5, stressPerSet: 1.3 },
+                    power: { reps: '2-4', rpe: '4-6', rir: 3, stressPerSet: 0.8 } }
+      };
+      // Ajustar según objetivo: fuerza => más énfasis en strength
+      if (goal === 'strength') {
+        base[level].strength.stressPerSet *= 1.2;
+        base[level].hypertrophy.stressPerSet *= 0.9;
+      } else if (goal === 'hypertrophy') {
+        base[level].hypertrophy.stressPerSet *= 1.2;
+        base[level].strength.stressPerSet *= 0.9;
+      }
+      return base[level];
+    }
+
+    // Obtener tipo DUP para el día según índice, variando ondulación
+    function getDayDUPType(dayIdx, totalDays) {
+      const cycle = ['strength', 'hypertrophy', 'power'];
+      if (totalDays <= 3) {
+        return cycle[dayIdx % cycle.length];
+      } else {
+        // Ondulación más compleja para más días
+        const pattern = ['strength', 'hypertrophy', 'power', 'hypertrophy', 'strength', 'power'];
+        return pattern[dayIdx % pattern.length];
+      }
+    }
+
+    function generateProgram() {
+      const daysName = getDUPSplit(selectedDays);
+      const params = getDUPParams(selectedExperience, selectedGoal);
+      const container = document.getElementById('weekContainer');
+      const totalDays = daysName.length;
+      container.innerHTML = '';
+
+      let totalStress = 0;
+      const allDayCards = [];
+
+      daysName.forEach((name, idx) => {
+        const dupType = getDayDUPType(idx, totalDays);
+        const focusMuscles = getDayFocus(name, idx);
+        const dupData = params[dupType];
+
+        // Generar ejercicios para ese día (2-4 ejercicios)
+        const exercises = [];
+        let dayStress = 0;
+        focusMuscles.forEach(muscle => {
+          if (exerciseDB[muscle]) {
+            const exList = exerciseDB[muscle];
+            // Escoger 1-2 ejercicios al azar (simulando selección inteligente)
+            const selectedEx = exList.sort(() => 0.5 - Math.random()).slice(0, Math.min(2, exList.length));
+            selectedEx.forEach(ex => {
+              const sets = muscle.includes('chest') || muscle.includes('back') || muscle.includes('quads') ? 4 : 3;
+              const stressPerExercise = Math.round((sets * dupData.stressPerSet) * 10) / 10;
+              exercises.push({
+                name: ex,
+                sets,
+                reps: dupData.reps,
+                rpe: dupData.rpe,
+                rir: dupData.rir,
+                stress: stressPerExercise
+              });
+              dayStress += stressPerExercise;
+            });
+          }
+        });
+
+        totalStress += dayStress;
+        const stressColor = dayStress > 8 ? 'text-danger' : dayStress > 5 ? 'text-warn' : 'text-success';
+
+        const cardHTML = `
+          <div class="day-card glass-card rounded-2xl p-5 transition-all duration-300 border border-white/5">
+            <div class="flex justify-between items-start mb-3">
+              <div>
+                <h3 class="text-white font-semibold text-lg">Día ${idx+1}: ${name}</h3>
+                <span class="text-xs uppercase tracking-wider text-titan-400">${dupType}</span>
+              </div>
+              <span class="text-sm font-mono ${stressColor}">SI ${dayStress.toFixed(1)}</span>
+            </div>
+            <div class="space-y-2">
+              ${exercises.map(ex => `
+                <div class="flex justify-between text-sm border-b border-white/5 pb-1">
+                  <span class="text-titan-200">${ex.name}</span>
+                  <span class="text-titan-400">${ex.sets}x${ex.reps} @RPE ${ex.rpe}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+        allDayCards.push(cardHTML);
+      });
+
+      container.innerHTML = allDayCards.join('');
+
+      // Actualizar barra de estrés total
+      const stressBar = document.getElementById('stressBarFill');
+      const maxStress = totalDays > 4 ? 50 : 35; // umbral de sobrecarga
+      const percentage = Math.min(100, (totalStress / maxStress) * 100);
+      stressBar.style.width = `${percentage}%`;
+      document.getElementById('totalStressBadge').textContent = `Total: ${totalStress.toFixed(1)}`;
+
+      // Recomendación de fatiga
+      const advice = document.getElementById('fatigueAdvice');
+      if (percentage > 90) {
+        advice.innerHTML = '<span class="text-danger font-medium">⚠️ Riesgo de sobrecarga.</span> Se recomienda descarga tras esta semana.';
+      } else if (percentage > 65) {
+        advice.innerHTML = '<span class="text-warn font-medium">⚡ Carga alta.</span> Vigila sueño y alimentación. Semana productiva.';
+      } else {
+        advice.innerHTML = '<span class="text-success font-medium">✅ Carga óptima.</span> Estimulas adaptación sin acumular fatiga excesiva.';
+      }
+
+      // Mostrar resultados
+      document.getElementById('resultContainer').classList.remove('hidden');
+      document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Activar botón generar con Enter (opcional)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && document.activeElement.tagName !== 'INPUT') {
+        generateProgram();
+      }
+    });
+  </script>
+</body>
+</html>
